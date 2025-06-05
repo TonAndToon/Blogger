@@ -21,17 +21,39 @@ class _AuthenState extends State<Authen> {
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           behavior: HitTestBehavior.opaque,
           child: ListView(
-            children: [
+            children: [SizedBox(
+                height: 87,
+              ),
               buildImage(size),
               buildTitle(),
               buildUser(size),
               buildPassword(size),
               buildLogin(size),
               buildCreateAccount(),
+              SizedBox(height: 78,),
+              buildVersionTitle(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Row buildVersionTitle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          child: ShowTitle(
+            title: 'version :',
+            textStyle: MyContant().h3StyleD(),
+          ),
+        ),
+           Text(
+            MyContant.version,
+            style: MyContant().h3StyleL(),
+          ),
+      ],
     );
   }
 
@@ -50,7 +72,7 @@ class _AuthenState extends State<Authen> {
               Navigator.pushNamed(context, MyContant.rounteCreateAccount),
           child: Text(
             'Create account',
-            style: MyContant().h2StyleL(),
+            style: MyContant().h3StyleL(),
           ),
         ),
       ],

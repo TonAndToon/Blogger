@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class MyContant {
   //General
   static String appName = 'LDB Blogger';
+  static String version = ' 20250605.V1.0.1';
 
   //Route
   static String rounteAuthen = '/authen';
@@ -16,6 +17,7 @@ class MyContant {
   static String img2 = 'assets/images/ATM2.webp';
   static String img3 = 'assets/images/ATM3.webp';
   static String img4 = 'assets/images/ATM4.webp';
+  static String avatar = 'assets/images/account_avatar_user_icon.webp';
 
   //Colors
   static Color primaryColor = Color(0xff1E88E5);

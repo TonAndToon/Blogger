@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:blogger/utility/my_contant.dart';
+import 'package:blogger/widgets/show_image.dart';
 import 'package:blogger/widgets/show_title.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
@@ -11,6 +15,7 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   String? typeUser;
+  File? file;
 
   Row buildName(double size) {
     return Row(
@@ -52,14 +57,19 @@ class _CreateAccountState extends State<CreateAccount> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size * 0.63,margin: EdgeInsets.symmetric(vertical: 15),
+          width: size * 0.63,
+          margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
+            maxLines: 3,
             decoration: InputDecoration(
-              labelText: 'Address:',
-              labelStyle: MyContant().h3StyleP(),
-              prefixIcon: Icon(
-                Icons.home,
-                color: MyContant.primaryColor,
+              hintText: 'Address :',
+              hintStyle: MyContant().h3StyleP(),
+              prefixIcon: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 52),
+                child: Icon(
+                  Icons.home,
+                  color: MyContant.primaryColor,
+                ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -88,10 +98,12 @@ class _CreateAccountState extends State<CreateAccount> {
       children: [
         Container(
           width: size * 0.63,
+          margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
+            maxLines: 1,
             decoration: InputDecoration(
-              labelText: 'Phonenumber:',
-              labelStyle: MyContant().h3StyleP(),
+              hintText: 'Phone :',
+              hintStyle: MyContant().h3StyleP(),
               prefixIcon: Icon(
                 Icons.phone,
                 color: MyContant.primaryColor,
@@ -117,18 +129,57 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  Row buildEmail(double size) {
+  Row buildUser(double size) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size * 0.63,margin: EdgeInsets.symmetric(vertical: 15),
+          width: size * 0.63,
+          margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
+            maxLines: 1,
             decoration: InputDecoration(
-              labelText: 'Email:',
-              labelStyle: MyContant().h3StyleP(),
+              hintText: 'User :',
+              hintStyle: MyContant().h3StyleP(),
               prefixIcon: Icon(
-                Icons.mail,
+                Icons.account_circle,
+                color: MyContant.primaryColor,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(
+                  color: MyContant.primaryColor,
+                  width: 1,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(
+                  color: MyContant.lightColor,
+                  width: 3,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row buildPassword(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: size * 0.63,
+          margin: EdgeInsets.symmetric(vertical: 8),
+          child: TextFormField(
+            maxLines: 1,
+            decoration: InputDecoration(
+              hintText: 'Password :',
+              hintStyle: MyContant().h3StyleP(),
+              prefixIcon: Icon(
+                Icons.key,
                 color: MyContant.primaryColor,
               ),
               enabledBorder: OutlineInputBorder(
@@ -163,81 +214,150 @@ class _CreateAccountState extends State<CreateAccount> {
           style: TextStyle(color: MyContant.whColor),
         ),
       ),
-      body: ListView(
-        padding: EdgeInsets.all(15),
-        children: [
-          buildTitle('Information :'),
-          buildName(size),
-          buildTitle('Type User :'),
-          buildRadioBuyer(size),
-          buildRadioSeller(size),
-          buildRadioRider(size),
-          buildTitle('Basic information :'),
-          buildAddress(size),
-          buildPhonenumber(size),
-          buildEmail(size),
-        ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: ListView(
+          padding: EdgeInsets.all(15),
+          children: [
+            buildTitle('Information :'),
+            buildName(size),
+            buildTitle('Type User :'),
+            buildRadioBuyer(size),
+            buildRadioSeller(size),
+            buildRadioRider(size),
+            buildTitle('Basic information :'),
+            buildAddress(size),
+            buildPhonenumber(size),
+            buildUser(size),
+            buildPassword(size),
+            buildTitle('Photo'),
+            buildSubTitle(),
+            buildAvatar(size),
+          ],
+        ),
       ),
     );
   }
 
-  Row buildRadioBuyer(double size) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center,
+  Future<Null> chooseImage(ImageSource source) async {
+    try {
+      var result = await ImagePicker().pickImage(
+        source: source,
+        maxWidth: 500,
+        maxHeight: 500,
+      );
+      setState(() {
+        file = File(result!.path);
+      });
+    } catch (e) {}
+  }
+
+  Row buildAvatar(double size) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Container(width: size*0.63,
+        IconButton(
+          onPressed: () => chooseImage(ImageSource.camera),
+          icon: Icon(
+            Icons.add_a_photo,
+            color: MyContant.primaryColor,
+            size: 36,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 15),
+          child: file == null
+              ? ShowImage(path: MyContant.avatar)
+              : Image.file(file!),
+          height: size * 0.46,
+        ),
+        IconButton(
+          onPressed: () => chooseImage(ImageSource.gallery),
+          icon: Icon(
+            Icons.add_photo_alternate,
+            color: MyContant.primaryColor,
+            size: 36,
+          ),
+        ),
+      ],
+    );
+  }
+
+  ShowTitle buildSubTitle() {
+    return ShowTitle(
+      title:
+          'Please show photo for create new account, If you dont show photo show image default! ',
+      textStyle: MyContant().h3StyleP(),
+    );
+  }
+
+  Row buildRadioBuyer(double size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: size * 0.63,
           child: RadioListTile(
-                value: 'buyer',
-                groupValue: typeUser,
-                onChanged: (value) {
-                  setState(() {
-                    typeUser = value as String;
-                  });
-                },
-                title: ShowTitle(
-                  title: '(Buyyer)',
-                  textStyle: MyContant().h3StyleP(),
-                ),
-              ),
+            value: 'buyer',
+            groupValue: typeUser,
+            onChanged: (value) {
+              setState(() {
+                typeUser = value as String;
+              });
+            },
+            title: ShowTitle(
+              title: '(Buyyer)',
+              textStyle: MyContant().h3StyleP(),
+            ),
+          ),
         ),
       ],
     );
   }
 
   Row buildRadioSeller(double size) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(width: size*0.63,
+        Container(
+          width: size * 0.63,
           child: RadioListTile(
-                value: 'seller',
-                groupValue: typeUser,
-                onChanged: (value) {setState(() {
-                    typeUser = value as String;
-                  });},
-                title: ShowTitle(
-                  title: '(Seller)',
-                  textStyle: MyContant().h3StyleP(),
-                ),
-              ),
+            value: 'seller',
+            groupValue: typeUser,
+            onChanged: (value) {
+              setState(() {
+                typeUser = value as String;
+              });
+            },
+            title: ShowTitle(
+              title: '(Seller)',
+              textStyle: MyContant().h3StyleP(),
+            ),
+          ),
         ),
       ],
     );
   }
 
   Row buildRadioRider(double size) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(width: size*0.63,
+        Container(
+          width: size * 0.63,
           child: RadioListTile(
-                value: 'rider',
-                groupValue: typeUser,
-                onChanged: (value) {setState(() {
-                    typeUser = value as String;
-                  });},
-                title: ShowTitle(
-                  title: '(Rider)',
-                  textStyle: MyContant().h3StyleP(),
-                ),
-              ),
+            value: 'rider',
+            groupValue: typeUser,
+            onChanged: (value) {
+              setState(() {
+                typeUser = value as String;
+              });
+            },
+            title: ShowTitle(
+              title: '(Rider)',
+              textStyle: MyContant().h3StyleP(),
+            ),
+          ),
         ),
       ],
     );
