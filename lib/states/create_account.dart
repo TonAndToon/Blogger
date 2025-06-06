@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:blogger/utility/my_contant.dart';
+import 'package:blogger/utility/my_dailog.dart';
 import 'package:blogger/widgets/show_image.dart';
+import 'package:blogger/widgets/show_progess.dart';
 import 'package:blogger/widgets/show_title.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -16,6 +19,71 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   String? typeUser;
   File? file;
+  double? lat, lng;
+
+  @override
+  void initState() {
+    super.initState();
+    checkPermission();
+  }
+
+  Future<Null> checkPermission() async {
+    bool locationService;
+    LocationPermission locationPermission;
+
+    locationService = await Geolocator.isLocationServiceEnabled();
+
+    if (locationService) {
+      print('Service Location open');
+
+      locationPermission = await Geolocator.checkPermission();
+
+      if (locationPermission == LocationPermission.denied) {
+        locationPermission = await Geolocator.requestPermission();
+        if (locationPermission == LocationPermission.deniedForever) {
+          MyDailog().alertLocationService(
+              context, 'Do not search location', 'Please to search location');
+        } else {
+          // Find LatLng
+          findLatLng();
+        }
+      } else {
+        if (locationPermission == LocationPermission.deniedForever) {
+          MyDailog().alertLocationService(
+              context, 'Do not search location', 'Please to search location');
+        } else {
+          // Find LatLng
+          findLatLng();
+        }
+      }
+    } else {
+      print('Service Location close');
+      MyDailog().alertLocationService(
+          context, 'Location Service close?', 'Please open location service');
+    }
+  }
+
+  Future<Null> findLatLng() async {
+    print('findLatLng ==>> work');
+
+    Position? position = await findPosition();
+    setState(() {
+      lat = position!.latitude;
+      lng = position.longitude;
+
+      print('lat = $lat, lng = $lng');
+    });
+  }
+
+  Future<Position?> findPosition() async {
+    Position position;
+    try {
+      position = await Geolocator.getCurrentPosition();
+      return position;
+    } catch (e) {
+      return null;
+    }
+  }
 
   Row buildName(double size) {
     return Row(
@@ -233,11 +301,19 @@ class _CreateAccountState extends State<CreateAccount> {
             buildTitle('Photo'),
             buildSubTitle(),
             buildAvatar(size),
+            buildTitle('Location map'),
+            buildMap(),
           ],
         ),
       ),
     );
   }
+
+  Widget buildMap() => Container(
+        width: double.infinity,
+        height: 200,
+        child: lat == null ? ShowProgess() : Text('Lat = $lat, Lng = $lng'),
+      );
 
   Future<Null> chooseImage(ImageSource source) async {
     try {
@@ -253,7 +329,8 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   Row buildAvatar(double size) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         IconButton(
