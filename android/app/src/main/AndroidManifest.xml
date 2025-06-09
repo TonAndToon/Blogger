@@ -5,6 +5,8 @@
         android:label="blogger"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAOZ8V6PD9XMpeHmEakfGpr-76R5q-hV4M"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
