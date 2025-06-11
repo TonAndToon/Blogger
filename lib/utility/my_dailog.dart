@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MyDailog {
-  Future<Null> alertLocationService(BuildContext context, String title, String messagebox) async {
+  Future<Null> alertLocationService(
+      BuildContext context, String title, String messagebox) async {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -35,6 +36,34 @@ class MyDailog {
               'OK',
               style: MyContant().h2StyleP(),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<Null> normalDailog(
+      BuildContext context, String title, String messageboxx) async {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: ListTile(
+          leading: ShowImage(
+            path: MyContant.img4,
+          ),
+          title: ShowTitle(
+            title: title,
+            textStyle: MyContant().h2StyleP(),
+          ),
+          subtitle: ShowTitle(
+            title: messageboxx,
+            textStyle: MyContant().h3StyleP(),
+          ),
+        ),
+        children: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK'),
           ),
         ],
       ),

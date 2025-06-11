@@ -180,6 +180,7 @@ class _CreateAccountState extends State<CreateAccount> {
           width: size * 0.63,
           margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
+            keyboardType: TextInputType.phone,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Plaese fill phonenumber';
@@ -304,15 +305,7 @@ class _CreateAccountState extends State<CreateAccount> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () {
-              if (formKey.currentState!.validate()) {}
-            },
-            icon: Icon(
-              Icons.cloud_upload_outlined,
-              color: MyContant.whColor,
-            ),
-          ),
+          buildCreateMyAccount(),
         ],
         backgroundColor: MyContant.primaryColor,
         title: Text(
@@ -322,30 +315,52 @@ class _CreateAccountState extends State<CreateAccount> {
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        behavior: HitTestBehavior.opaque,
         child: Form(
           key: formKey,
-          child: ListView(
-            padding: EdgeInsets.all(15),
-            children: [
-              buildTitle('Information :'),
-              buildName(size),
-              buildTitle('Type User :'),
-              buildRadioBuyer(size),
-              buildRadioSeller(size),
-              buildRadioRider(size),
-              buildTitle('Basic information :'),
-              buildAddress(size),
-              buildPhonenumber(size),
-              buildUser(size),
-              buildPassword(size),
-              buildTitle('Photo'),
-              buildSubTitle(),
-              buildAvatar(size),
-              buildTitle('Location map'),
-              buildMap(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildTitle('Information :'),
+                buildName(size),
+                buildTitle('Type User :'),
+                buildRadioBuyer(size),
+                buildRadioSeller(size),
+                buildRadioRider(size),
+                buildTitle('Basic information :'),
+                buildAddress(size),
+                buildPhonenumber(size),
+                buildUser(size),
+                buildPassword(size),
+                buildTitle('Photo'),
+                buildSubTitle(),
+                buildAvatar(size),
+                buildTitle('Location map'),
+                buildMap(),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  IconButton buildCreateMyAccount() {
+    return IconButton(
+      onPressed: () {
+        if (formKey.currentState!.validate()) {
+          if (typeUser == null) {
+            print('Non choose type User');
+            MyDailog().normalDailog(
+                context, 'Your do not choose User', 'Plaese to choose User');
+          } else {
+            print('Process Insert to Database');
+          }
+        }
+      },
+      icon: Icon(
+        Icons.cloud_upload_outlined,
+        color: MyContant.whColor,
       ),
     );
   }
