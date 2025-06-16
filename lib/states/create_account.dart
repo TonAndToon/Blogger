@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:blogger/utility/my_contant.dart';
 import 'package:blogger/utility/my_dailog.dart';
 import 'package:blogger/widgets/show_image.dart';
 import 'package:blogger/widgets/show_progess.dart';
 import 'package:blogger/widgets/show_title.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,9 +21,15 @@ class CreateAccount extends StatefulWidget {
 
 class _CreateAccountState extends State<CreateAccount> {
   String? typeUser;
+  String avatar = '';
   File? file;
   double? lat, lng;
   final formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -94,10 +102,12 @@ class _CreateAccountState extends State<CreateAccount> {
         Container(
           width: size * 0.63,
           child: TextFormField(
+            controller: nameController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Plaese fill name';
               } else {}
+              return null;
             },
             decoration: InputDecoration(
               labelText: 'Name:',
@@ -135,10 +145,12 @@ class _CreateAccountState extends State<CreateAccount> {
           width: size * 0.63,
           margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
+            controller: addressController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Plaese fill address';
               } else {}
+              return null;
             },
             maxLines: 3,
             decoration: InputDecoration(
@@ -180,11 +192,13 @@ class _CreateAccountState extends State<CreateAccount> {
           width: size * 0.63,
           margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
+            controller: phoneController,
             keyboardType: TextInputType.phone,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Plaese fill phonenumber';
               } else {}
+              return null;
             },
             maxLines: 1,
             decoration: InputDecoration(
@@ -223,10 +237,12 @@ class _CreateAccountState extends State<CreateAccount> {
           width: size * 0.63,
           margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
+            controller: userController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Plaese fill user';
               } else {}
+              return null;
             },
             maxLines: 1,
             decoration: InputDecoration(
@@ -265,10 +281,12 @@ class _CreateAccountState extends State<CreateAccount> {
           width: size * 0.63,
           margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
+            controller: passwordController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Plaese fill password';
               } else {}
+              return null;
             },
             maxLines: 1,
             decoration: InputDecoration(
@@ -355,6 +373,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 context, 'Your do not choose User', 'Plaese to choose User');
           } else {
             print('Process Insert to Database');
+            uploadPictureAndInsertData();
           }
         }
       },
@@ -362,6 +381,90 @@ class _CreateAccountState extends State<CreateAccount> {
         Icons.cloud_upload_outlined,
         color: MyContant.whColor,
       ),
+    );
+  }
+
+  Future<Null> uploadPictureAndInsertData() async {
+    String name = nameController.text;
+    String address = addressController.text;
+    String phone = phoneController.text;
+    String user = userController.text;
+    String password = passwordController.text;
+
+    print(
+        '#### name = $name, address = $address, phone = $phone, user = $user, password = $password');
+    String path =
+        '${MyContant.domain}/bloggerr/getUserWhereUser.php?isAdd=true&user=$user';
+    await Dio().get(path).then(
+      (value) async {
+        print('#### value ==>> $value');
+        if (value.toString() == 'null') {
+          print('#### User OK');
+
+          if (file == null) {
+            //No Avatar
+            processInsertMySQL(
+              name: name,
+              type: typeUser,
+              address: address,
+              phone: phone,
+              user: user,
+              password: password,
+            );
+          } else {
+            //Have Avatar
+            print('#### process Upload Avatar');
+            String apiSaveAvatar =
+                '${MyContant.domain}/bloggerr/saveAvatar.php';
+            int i = Random().nextInt(100000);
+            String nameAvatar = 'avatar$i.jpg';
+            Map<String, dynamic> map = Map();
+            map['file'] =
+                await MultipartFile.fromFile(file!.path, filename: nameAvatar);
+            FormData data = FormData.fromMap(map);
+            await Dio().post(apiSaveAvatar, data: data).then(
+              (value) {
+                avatar = '/bloggerr/avatar/$nameAvatar';
+                processInsertMySQL(
+                  name: name,
+                  type: typeUser,
+                  address: address,
+                  phone: phone,
+                  user: user,
+                  password: password,
+                );
+              },
+            );
+          }
+        } else {
+          MyDailog()
+              .normalDailog(context, 'User false ?', 'Please Change User');
+        }
+      },
+    );
+  }
+
+  Future<Null> processInsertMySQL({
+    String? name,
+    String? type,
+    String? address,
+    String? phone,
+    String? user,
+    String? password,
+  }) async {
+    print('#### processInsertMySQL Work and avatar ==>> $avatar');
+    String apiInsertUser =
+        '${MyContant.domain}/bloggerr/insertUser.php?isAdd=true&name=$name&type=$type&address=$address&phone=$phone&user=$user&password=$password&avatar=$avatar&lat=$lat&lng=$lng';
+
+    await Dio().get(apiInsertUser).then(
+      (value) {
+        if (value.toString() == 'true') {
+          Navigator.pop(context);
+        } else {
+          MyDailog().normalDailog(
+              context, 'Create New User False !!!', 'Please Try Again');
+        }
+      },
     );
   }
 
