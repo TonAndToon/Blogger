@@ -63,7 +63,7 @@ class MyDailog {
         children: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('OK'),
+            child: Text('OKay'),
           ),
         ],
       ),

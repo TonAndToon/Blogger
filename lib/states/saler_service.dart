@@ -11,7 +11,9 @@ class _SalerServiceState extends State<SalerService> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(
+        title: Text('Seller'),
+      ),
     );
   }
 }
