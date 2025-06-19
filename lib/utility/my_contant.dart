@@ -4,7 +4,7 @@ class MyContant {
   //General
   static String appName = 'LDB Blogger';
   static String version = ' 20250605.V1.0.1';
-  static String domain = 'https://f852-43-252-244-246.ngrok-free.app';
+  static String domain = 'https://74c5-202-136-243-67.ngrok-free.app';
 
   //Route
   static String rounteAuthen = '/authen';
@@ -12,6 +12,7 @@ class MyContant {
   static String rounteBuyerService = '/buyerService';
   static String rounteSalerService = '/salerService';
   static String rounteRiderService = '/riderService';
+  static String rounteAddProduct = '/addProduct';
 
   //Images
   static String img1 = 'assets/images/ATM1.webp';
@@ -19,12 +20,27 @@ class MyContant {
   static String img3 = 'assets/images/ATM3.webp';
   static String img4 = 'assets/images/ATM4.webp';
   static String avatar = 'assets/images/account_avatar_user_icon.webp';
+  static String iconphotolb = 'assets/images/icon_img_ligth_blue.webp';
+  static String iconphotodb = 'assets/images/icon_img_dark_blue.webp';
 
   //Colors
   static Color primaryColor = Color(0xff1E88E5);
   static Color lightColor = Color(0xff64b4f6);
   static Color darkColor = Color(0xff1146a0);
   static Color whColor = Color(0xffFFFFFF);
+
+  static Map<int, Color> mapMaterialColor = {
+  50:Color.fromRGBO(30, 136, 229, 0.1),
+  100:Color.fromRGBO(30, 136, 229, 0.2),
+  200:Color.fromRGBO(30, 136, 229, 0.3),
+  300:Color.fromRGBO(30, 136, 229, 0.4),
+  400:Color.fromRGBO(30, 136, 229, 0.5),
+  500:Color.fromRGBO(30, 136, 229, 0.6),
+  600:Color.fromRGBO(30, 136, 229, 0.7),
+  700:Color.fromRGBO(30, 136, 229, 0.8),
+  800:Color.fromRGBO(30, 136, 229, 0.9),
+  900:Color.fromRGBO(30, 136, 229, 1.0),
+  };
 
   //Text style
   //Primary color

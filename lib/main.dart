@@ -1,3 +1,4 @@
+import 'package:blogger/states/add_product.dart';
 import 'package:blogger/states/authen.dart';
 import 'package:blogger/states/buyer_service.dart';
 import 'package:blogger/states/create_account.dart';
@@ -13,6 +14,7 @@ final Map<String, WidgetBuilder> map = {
   '/buyerService': (BuildContext context) => BuyerService(),
   '/salerService': (BuildContext context) => SalerService(),
   '/riderService': (BuildContext context) => RiderService(),
+  '/addProduct': (BuildContext context) => AddProduct(),
 };
 
 String? initalRounte;
@@ -48,11 +50,22 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    // MaterialColor materialColor =
+    //     MaterialColor(0xff1E88E5, MyContant.mapMaterialColor);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: MyContant.appName,
       routes: map,
       initialRoute: initalRounte,
+      // theme: ThemeData(primarySwatch: materialColor),
+      theme: ThemeData(
+        // Set global app bar theme here
+        appBarTheme: AppBarTheme(
+          color: MyContant.primaryColor,
+        ),
+        
+      ),
+      
     );
   }
 }
