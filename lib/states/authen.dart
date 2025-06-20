@@ -100,7 +100,8 @@ class _AuthenState extends State<Authen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size * 0.63,
+          width: size * 0.95,
+          height: size * 0.15,
           margin: EdgeInsets.symmetric(vertical: 15),
           child: ElevatedButton(
             style: MyContant().myButtonStyle(),
@@ -187,7 +188,7 @@ class _AuthenState extends State<Authen> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 15),
-          width: size * 0.63,
+          width: size * 0.95,
           child: TextFormField(
             controller: userController,
             validator: (value) {
@@ -231,7 +232,7 @@ class _AuthenState extends State<Authen> {
       children: [
         Container(
           margin: EdgeInsets.only(top: 15),
-          width: size * 0.63,
+          width: size * 0.95,
           child: TextFormField(
             controller: passwordController,
             validator: (value) {

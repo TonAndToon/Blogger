@@ -4,7 +4,7 @@ class MyContant {
   //General
   static String appName = 'LDB Blogger';
   static String version = ' 20250605.V1.0.1';
-  static String domain = 'https://74c5-202-136-243-67.ngrok-free.app';
+  static String domain = 'https://0300-115-84-76-170.ngrok-free.app';
 
   //Route
   static String rounteAuthen = '/authen';
@@ -28,6 +28,7 @@ class MyContant {
   static Color lightColor = Color(0xff64b4f6);
   static Color darkColor = Color(0xff1146a0);
   static Color whColor = Color(0xffFFFFFF);
+  static Color redColor = Colors.red;
 
   static Map<int, Color> mapMaterialColor = {
   50:Color.fromRGBO(30, 136, 229, 0.1),
