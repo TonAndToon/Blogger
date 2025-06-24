@@ -7,6 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MyDailog {
+  Future<Null> showProgressDialog(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => WillPopScope(
+        child: Center(child: CircularProgressIndicator(color: MyContant.lightColor,)),
+        onWillPop: () async {
+          return false;
+        },
+      ),
+    );
+  }
+
   Future<Null> alertLocationService(
       BuildContext context, String title, String messagebox) async {
     showDialog(

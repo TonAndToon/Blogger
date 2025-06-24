@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:blogger/utility/my_contant.dart';
+import 'package:blogger/utility/my_dailog.dart';
 import 'package:blogger/widgets/show_image.dart';
 import 'package:blogger/widgets/show_title.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -22,6 +25,7 @@ class _AddProductState extends State<AddProduct> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    initialFile();
   }
 
   void initialFile() {
@@ -34,6 +38,12 @@ class _AddProductState extends State<AddProduct> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => processAddProduct(),
+            icon: Icon(Icons.cloud_upload),
+          ),
+        ],
         foregroundColor: MyContant.whColor,
         title: Text('Add product'),
       ),
@@ -76,7 +86,7 @@ class _AddProductState extends State<AddProduct> {
             child: ElevatedButton(
               style: MyContant().myButtonStyle(),
               onPressed: () {
-                if (formKey.currentState!.validate()) {}
+                processAddProduct();
               },
               child: Text(
                 'Add product',
@@ -89,6 +99,44 @@ class _AddProductState extends State<AddProduct> {
     );
   }
 
+  Future<Null> processAddProduct() async {
+    if (formKey.currentState!.validate()) {
+      bool checkFile = true;
+      for (var item in files) {
+        if (item == null) {
+          checkFile = false;
+        }
+      }
+      if (checkFile) {
+        //print('#### choose 4 item success');
+        MyDailog().showProgressDialog(context);
+
+        String apiSaveProduct = '${MyContant.domain}/bloggerr/saveProduct.php';
+        
+        int loop = 0;
+        for (var item in files) {
+          int i = Random().nextInt(1000000);
+          String nameFile = 'product$i.jpg';
+          Map<String, dynamic> map = {};
+          map['file'] =
+              await MultipartFile.fromFile(item!.path, filename: nameFile);
+          FormData data = FormData.fromMap(map);
+          await Dio().post(apiSaveProduct, data: data).then((value) {
+            print('Upload success');
+            loop++;
+            if (loop >= files.length) {
+              Navigator.pop(context);
+            }
+            
+          });
+        }
+      } else {
+        MyDailog()
+            .normalDailog(context, 'More Image', 'Please choose more image');
+      }
+    }
+  }
+
   Future<Null> processImagePicker(ImageSource source, int index) async {
     try {
       var result = await ImagePicker().pickImage(
@@ -96,10 +144,10 @@ class _AddProductState extends State<AddProduct> {
         maxWidth: 800,
         maxHeight: 800,
       );
+      //files[index] = File(result!.path);
       setState(() {
         file = File(result!.path);
         files[index] = file;
-
       });
     } catch (e) {}
   }
@@ -148,10 +196,15 @@ class _AddProductState extends State<AddProduct> {
   Column buildImage(BoxConstraints constraints) {
     return Column(
       children: [
-        Container(
-          width: constraints.maxWidth * 0.69,
-          height: constraints.maxWidth * 0.69,
-          child: file == null ? Image.asset(MyContant.iconphotolb) : Image.file(file!),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 23),
+          child: Container(
+            width: constraints.maxWidth * 0.59,
+            height: constraints.maxWidth * 0.59,
+            child: file == null
+                ? Image.asset(MyContant.iconphotolb)
+                : Image.file(file!),
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -161,9 +214,12 @@ class _AddProductState extends State<AddProduct> {
               height: 42,
               child: InkWell(
                 onTap: () => chooseSourceImageDialog(0),
-                child: Image.asset(
-                  MyContant.iconphotolb,
-                ),
+                child: files[0] == null
+                    ? Image.asset(MyContant.iconphotolb)
+                    : Image.file(
+                        files[0]!,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             Container(
@@ -171,9 +227,12 @@ class _AddProductState extends State<AddProduct> {
               height: 42,
               child: InkWell(
                 onTap: () => chooseSourceImageDialog(1),
-                child: Image.asset(
-                  MyContant.iconphotolb,
-                ),
+                child: files[1] == null
+                    ? Image.asset(MyContant.iconphotolb)
+                    : Image.file(
+                        files[1]!,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             Container(
@@ -181,9 +240,12 @@ class _AddProductState extends State<AddProduct> {
               height: 42,
               child: InkWell(
                 onTap: () => chooseSourceImageDialog(2),
-                child: Image.asset(
-                  MyContant.iconphotolb,
-                ),
+                child: files[2] == null
+                    ? Image.asset(MyContant.iconphotolb)
+                    : Image.file(
+                        files[2]!,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             Container(
@@ -191,9 +253,12 @@ class _AddProductState extends State<AddProduct> {
               height: 42,
               child: InkWell(
                 onTap: () => chooseSourceImageDialog(3),
-                child: Image.asset(
-                  MyContant.iconphotolb,
-                ),
+                child: files[3] == null
+                    ? Image.asset(MyContant.iconphotolb)
+                    : Image.file(
+                        files[3]!,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
           ],
