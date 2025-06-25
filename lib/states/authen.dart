@@ -139,9 +139,12 @@ class _AuthenState extends State<Authen> {
             String type = model.type;
             print('#### Authen Success in Type ==>> $type');
 
-            SharedPreferences preferences = await SharedPreferences.getInstance();
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            preferences.setString('id', model.id);
             preferences.setString('type', type);
             preferences.setString('user', model.user);
+            preferences.setString('name', model.name);
 
             switch (type) {
               case 'buyer':
@@ -179,8 +182,6 @@ class _AuthenState extends State<Authen> {
       }
     });
   }
-
-  
 
   Row buildUser(double size) {
     return Row(
