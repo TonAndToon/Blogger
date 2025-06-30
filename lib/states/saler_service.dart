@@ -26,7 +26,7 @@ class _SalerServiceState extends State<SalerService> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(foregroundColor: MyContant.whColor,
-        title: Text('Seller'),
+        title: Text('ຜູ້ຂາຍ'),
       ),
       drawer: Drawer(
         child: Stack(

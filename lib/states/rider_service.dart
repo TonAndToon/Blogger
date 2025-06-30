@@ -14,7 +14,7 @@ class _RiderServiceState extends State<RiderService> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(foregroundColor: MyContant.whColor,
-        title: Text('Rider'),
+        title: Text('ຜູ້ສົ່ງ'),
       ),
       drawer: Drawer(
         child: ShowSignOut(),
