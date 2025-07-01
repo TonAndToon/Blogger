@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:blogger/models/product_model.dart';
+import 'package:blogger/states/edit_product.dart';
 //import 'package:blogger/states/add_product.dart';
 import 'package:blogger/utility/my_contant.dart';
 import 'package:blogger/widgets/show_image.dart';
@@ -161,7 +162,15 @@ class _ShowProductSellerState extends State<ShowProductSeller> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          print('#### You click edit');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProduct(productModel: productModels[index],),
+                            ),
+                          );
+                        },
                         icon: Icon(
                           Icons.edit_outlined,
                           size: 32,
