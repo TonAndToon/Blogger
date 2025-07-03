@@ -128,8 +128,8 @@ class _ShowProductSellerState extends State<ShowProductSeller> {
                     textStyle: MyContant().h2StyleP(),
                   ),
                   Container(
-                    width: constraints.maxWidth * 0.4,
-                    height: constraints.maxWidth * 0.5,
+                    width: constraints.maxWidth * 0.3,
+                    height: constraints.maxWidth * 0.4,
                     child: CachedNetworkImage(
                       imageUrl: createUrl(productModels[index].images),
                       placeholder: (context, url) => ShowProgess(),
@@ -165,11 +165,12 @@ class _ShowProductSellerState extends State<ShowProductSeller> {
                         onPressed: () {
                           print('#### You click edit');
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditProduct(productModel: productModels[index],),
-                            ),
-                          );
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProduct(
+                                  productModel: productModels[index],
+                                ),
+                              )).then((value) => loadValueFromAPI());
                         },
                         icon: Icon(
                           Icons.edit_outlined,

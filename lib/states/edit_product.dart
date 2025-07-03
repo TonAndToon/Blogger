@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:blogger/models/product_model.dart';
 import 'package:blogger/utility/my_contant.dart';
 import 'package:blogger/widgets/show_progess.dart';
 import 'package:blogger/widgets/show_title.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -24,6 +26,7 @@ class _EditProductState extends State<EditProduct> {
 
   List<String> pathImages = [];
   List<File?> files = [];
+  bool statusImage = false; //false => not change image
 
   final formKey = GlobalKey<FormState>();
 
@@ -104,12 +107,23 @@ class _EditProductState extends State<EditProduct> {
 
   Container buildEditProduct(BoxConstraints constraints) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-      width: constraints.maxWidth,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(9),
+      ),
+      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      width: constraints.maxWidth * 0.9,
+      height: constraints.maxWidth * 0.15,
       child: ElevatedButton.icon(
+        style: MyContant().myButtonStyle(),
         onPressed: () => processEdit(),
-        label: Text('ແກ້ໄຂສີນຄ້າ'),
-        icon: Icon(Icons.edit),
+        label: Text(
+          'ແກ້ໄຂສີນຄ້າ',
+          style: TextStyle(color: MyContant.whColor, fontSize: 18),
+        ),
+        icon: Icon(
+          Icons.edit,
+          color: MyContant.whColor,
+        ),
       ),
     );
   }
@@ -120,6 +134,7 @@ class _EditProductState extends State<EditProduct> {
           .pickImage(source: source, maxWidth: 800, maxHeight: 800);
       setState(() {
         files[index] = File(result!.path);
+        statusImage = true;
       });
     } catch (e) {}
   }
@@ -181,8 +196,23 @@ class _EditProductState extends State<EditProduct> {
             controller: nameController,
             decoration: InputDecoration(
               labelText: 'ຊື່ສີນຄ້າ',
+              labelStyle: MyContant().h3StyleP(),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(
+                  color: MyContant.primaryColor,
+                  width: 1,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(
+                  color: MyContant.lightColor,
+                  width: 2,
+                ),
               ),
             ),
           ),
@@ -210,7 +240,24 @@ class _EditProductState extends State<EditProduct> {
             controller: priceController,
             decoration: InputDecoration(
               labelText: 'ລາຄາ',
-              border: OutlineInputBorder(),
+              labelStyle: MyContant().h3StyleP(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(
+                  color: MyContant.primaryColor,
+                  width: 1,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(
+                  color: MyContant.lightColor,
+                  width: 2,
+                ),
+              ),
             ),
           ),
         ),
@@ -236,7 +283,24 @@ class _EditProductState extends State<EditProduct> {
             maxLines: 4,
             decoration: InputDecoration(
               labelText: 'ລາຍລະອຽດ',
-              border: OutlineInputBorder(),
+              labelStyle: MyContant().h3StyleP(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(
+                  color: MyContant.primaryColor,
+                  width: 1,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide(
+                  color: MyContant.lightColor,
+                  width: 2,
+                ),
+              ),
             ),
           ),
         ),
@@ -258,12 +322,51 @@ class _EditProductState extends State<EditProduct> {
     );
   }
 
-  processEdit() {
+  Future processEdit() async {
     if (formKey.currentState!.validate()) {
       String name = nameController.text;
       String price = priceController.text;
       String detail = detailController.text;
-      print('#### name = $name, price = $price, detail = $detail');
+      String id = productModel!.id;
+      String images;
+
+      if (statusImage) {
+        //upload image and refresh array pathImages
+        int index = 0;
+        for (var item in files) {
+          if (item != null) {
+            int i = Random().nextInt(100000);
+            String nameImage = 'productEdit$i.jpg';
+            String apiUploadImage =
+                '${MyContant.domain}/bloggerr/saveProduct.php';
+
+            Map<String, dynamic> map = {};
+            map['file'] =
+                await MultipartFile.fromFile(item.path, filename: nameImage);
+            FormData formData = FormData.fromMap(map);
+            await Dio().post(apiUploadImage, data: formData).then(
+              (value) {
+                pathImages[index] = '/product/$nameImage';
+              },
+            );
+          }
+          index++;
+        }
+
+        images = pathImages.toString();
+        Navigator.pop(context);
+      } else {
+        images = pathImages.toString();
+        Navigator.pop(context);
+      }
+
+      print('#### statusImage = $statusImage');
+      print('#### id = $id, name = $name, price = $price, detail = $detail');
+      print('#### images = $images');
+
+      String apiEditProduct =
+          '${MyContant.domain}/bloggerr/editProductWhereid.php?isAdd=true&id=$id&name=$name&price=$price&detail=$detail&images=$images';
+      await Dio().get(apiEditProduct).then((value) => Navigator.pop(context));
     }
   }
 }
