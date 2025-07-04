@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:blogger/bodys/show_manage_seller.dart';
 import 'package:blogger/bodys/show_order_seller.dart';
 import 'package:blogger/bodys/show_product_seller.dart';
+import 'package:blogger/models/user_model.dart';
 import 'package:blogger/utility/my_contant.dart';
 import 'package:blogger/widgets/show_signout.dart';
 import 'package:blogger/widgets/show_title.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 
 class SalerService extends StatefulWidget {
@@ -22,10 +27,39 @@ class _SalerServiceState extends State<SalerService> {
   ];
   int indexWitget = 0;
 
+  UserModel? userModel;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    findUserModel();
+  }
+
+  Future<Null> findUserModel() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String id = preferences.getString('id')!;
+    print('id Logined ==>> $id');
+    String apiGetUserWhereId =
+        '${MyContant.domain}/bloggerr/getUserWhereId.php?isAdd=true&id=$id';
+    await Dio().get(apiGetUserWhereId).then(
+      (value) {
+        print('#### value ==>> $value');
+        for (var item in json.decode(value.data)) {
+          setState(() {
+            userModel = UserModel.fromMap(item);
+            print('#### name logined = ${userModel!.name}');
+          });
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(foregroundColor: MyContant.whColor,
+      appBar: AppBar(
+        foregroundColor: MyContant.whColor,
         title: Text('ຜູ້ຂາຍ'),
       ),
       drawer: Drawer(
@@ -34,11 +68,7 @@ class _SalerServiceState extends State<SalerService> {
             ShowSignOut(),
             Column(
               children: [
-                UserAccountsDrawerHeader(
-                  accountName: null,
-                  accountEmail: null,
-                  decoration: BoxDecoration(color: MyContant.primaryColor),
-                ),
+                buildHead(),
                 menuShowOrder(),
                 menuShowManage(),
                 menuShowProduct(),
@@ -48,6 +78,25 @@ class _SalerServiceState extends State<SalerService> {
         ),
       ),
       body: widgets[indexWitget],
+    );
+  }
+
+  UserAccountsDrawerHeader buildHead() {
+    return UserAccountsDrawerHeader(
+      currentAccountPicture: CircleAvatar(
+        backgroundImage:
+            NetworkImage('${MyContant.domain}${userModel?.avatar}'),
+      ),
+      accountName: Text(userModel == null ? 'Name ?' : userModel!.name),
+      accountEmail: Text(userModel == null ? 'Type ?' : userModel!.type),
+      decoration: BoxDecoration(
+        gradient: RadialGradient(
+          colors: [
+            MyContant.lightColor,
+            MyContant.darkColor,
+          ],center: Alignment(-0.7, -0.2)
+        ),
+      ),
     );
   }
 

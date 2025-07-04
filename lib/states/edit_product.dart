@@ -344,11 +344,9 @@ class _EditProductState extends State<EditProduct> {
             map['file'] =
                 await MultipartFile.fromFile(item.path, filename: nameImage);
             FormData formData = FormData.fromMap(map);
-            await Dio().post(apiUploadImage, data: formData).then(
-              (value) {
-                pathImages[index] = '/product/$nameImage';
-              },
-            );
+            await Dio().post(apiUploadImage, data: formData).then((value) {
+              pathImages[index] = '/product/$nameImage';
+            });
           }
           index++;
         }
@@ -366,7 +364,11 @@ class _EditProductState extends State<EditProduct> {
 
       String apiEditProduct =
           '${MyContant.domain}/bloggerr/editProductWhereid.php?isAdd=true&id=$id&name=$name&price=$price&detail=$detail&images=$images';
-      await Dio().get(apiEditProduct).then((value) => Navigator.pop(context));
+      await Dio().get(apiEditProduct).then((value) {
+        if (mounted) {
+    Navigator.pop(context);
+  }
+      });
     }
   }
 }
