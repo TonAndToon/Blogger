@@ -63,7 +63,7 @@ class _EditProductState extends State<EditProduct> {
       appBar: AppBar(
         backgroundColor: MyContant.primaryColor,
         foregroundColor: MyContant.whColor,
-        title: Text('ແກ້ໄຂສີນຄ້າ'),
+        title: Text('ແກ້ໄຂສີນຄ້າ',style: TextStyle(fontFamily: 'NotoSansLao'),),
         actions: [
           IconButton(
             onPressed: () => processEdit(),
@@ -118,7 +118,7 @@ class _EditProductState extends State<EditProduct> {
         onPressed: () => processEdit(),
         label: Text(
           'ແກ້ໄຂສີນຄ້າ',
-          style: TextStyle(color: MyContant.whColor, fontSize: 18),
+          style: TextStyle(color: MyContant.whColor, fontSize: 18,fontFamily: 'NotoSansLao'),
         ),
         icon: Icon(
           Icons.edit,
@@ -185,7 +185,7 @@ class _EditProductState extends State<EditProduct> {
       children: [
         Container(
           width: constraints.maxWidth * 0.78,
-          child: TextFormField(
+          child: TextFormField(style: TextStyle(fontFamily: 'NotoSansLao'),
             validator: (value) {
               if (value!.isEmpty) {
                 return 'ກະລຸນາປ້ອນຊື່ສີນຄ້າ';
@@ -228,7 +228,7 @@ class _EditProductState extends State<EditProduct> {
         Container(
           margin: EdgeInsets.symmetric(vertical: 15),
           width: constraints.maxWidth * 0.78,
-          child: TextFormField(
+          child: TextFormField(style: TextStyle(fontFamily: 'NotoSansLao'),
             keyboardType: TextInputType.number,
             validator: (value) {
               if (value!.isEmpty) {
@@ -271,7 +271,7 @@ class _EditProductState extends State<EditProduct> {
       children: [
         Container(
           width: constraints.maxWidth * 0.78,
-          child: TextFormField(
+          child: TextFormField(style: TextStyle(fontFamily: 'NotoSansLao'),
             validator: (value) {
               if (value!.isEmpty) {
                 return 'ກະລຸນາປ້ອນລາຍລະອຽດສີນຄ້າ';

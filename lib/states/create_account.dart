@@ -100,7 +100,7 @@ class _CreateAccountState extends State<CreateAccount> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size * 0.63,
+          width: size * 0.95,
           child: TextFormField(
             controller: nameController,
             validator: (value) {
@@ -110,7 +110,7 @@ class _CreateAccountState extends State<CreateAccount> {
               return null;
             },
             decoration: InputDecoration(
-              labelText: 'Name:',
+              labelText: 'ຊື່ແລະນາມສະກຸນ:',
               labelStyle: MyContant().h3StyleP(),
               prefixIcon: Icon(
                 Icons.fingerprint,
@@ -142,7 +142,7 @@ class _CreateAccountState extends State<CreateAccount> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size * 0.63,
+          width: size * 0.95,
           margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
             controller: addressController,
@@ -154,7 +154,7 @@ class _CreateAccountState extends State<CreateAccount> {
             },
             maxLines: 3,
             decoration: InputDecoration(
-              hintText: 'Address :',
+              hintText: 'ທີ່ຢູ່:',
               hintStyle: MyContant().h3StyleP(),
               prefixIcon: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 52),
@@ -189,7 +189,7 @@ class _CreateAccountState extends State<CreateAccount> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size * 0.63,
+          width: size * 0.95,
           margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
             controller: phoneController,
@@ -202,7 +202,7 @@ class _CreateAccountState extends State<CreateAccount> {
             },
             maxLines: 1,
             decoration: InputDecoration(
-              hintText: 'Phone :',
+              hintText: 'ເບີຕິດຕໍ່:',
               hintStyle: MyContant().h3StyleP(),
               prefixIcon: Icon(
                 Icons.phone,
@@ -234,7 +234,7 @@ class _CreateAccountState extends State<CreateAccount> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size * 0.63,
+          width: size * 0.95,
           margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
             controller: userController,
@@ -246,7 +246,7 @@ class _CreateAccountState extends State<CreateAccount> {
             },
             maxLines: 1,
             decoration: InputDecoration(
-              hintText: 'User :',
+              hintText: 'ບັນຊີໃໝ່:',
               hintStyle: MyContant().h3StyleP(),
               prefixIcon: Icon(
                 Icons.account_circle,
@@ -278,7 +278,7 @@ class _CreateAccountState extends State<CreateAccount> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: size * 0.63,
+          width: size * 0.95,
           margin: EdgeInsets.symmetric(vertical: 8),
           child: TextFormField(
             controller: passwordController,
@@ -290,7 +290,7 @@ class _CreateAccountState extends State<CreateAccount> {
             },
             maxLines: 1,
             decoration: InputDecoration(
-              hintText: 'Password :',
+              hintText: 'ລະຫັດໃໝ່:',
               hintStyle: MyContant().h3StyleP(),
               prefixIcon: Icon(
                 Icons.key,
@@ -327,8 +327,8 @@ class _CreateAccountState extends State<CreateAccount> {
         ],
         backgroundColor: MyContant.primaryColor,
         title: Text(
-          'Create account',
-          style: TextStyle(color: MyContant.whColor),
+          'ສ້າງບັນຊີຜູ້ໃຊ້ງານ',
+          style: TextStyle(color: MyContant.whColor,fontFamily: 'NotoSansLao'),
         ),
       ),
       body: GestureDetector(
@@ -339,21 +339,21 @@ class _CreateAccountState extends State<CreateAccount> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                buildTitle('Information :'),
+                buildTitle('ຊື່ ແລະ ນາມສະກຸນ:'),
                 buildName(size),
-                buildTitle('Type User :'),
+                buildTitle('ປະເພດບັນຊີ:'),
                 buildRadioBuyer(size),
                 buildRadioSeller(size),
                 buildRadioRider(size),
-                buildTitle('Basic information :'),
+                buildTitle('ຂໍ້ມູນທີ່ຢູ່ ແລະ ເບີຕິດຕໍ່:'),
                 buildAddress(size),
                 buildPhonenumber(size),
                 buildUser(size),
                 buildPassword(size),
-                buildTitle('Photo'),
+                buildTitle('ຮູບພາບ'),
                 buildSubTitle(),
                 buildAvatar(size),
-                buildTitle('Location map'),
+                buildTitle('ແຜນທີ'),
                 buildMap(),
               ],
             ),
@@ -540,7 +540,7 @@ class _CreateAccountState extends State<CreateAccount> {
   ShowTitle buildSubTitle() {
     return ShowTitle(
       title:
-          'Please show photo for create new account, If you dont show photo show image default! ',
+          '     ກະ​ລຸ​ນາ​ສະ​ແດງ​ຮູບ​ພາບ​ສໍາ​ລັບ​ການ​ສ້າງ​ບັນ​ຊີ​ໃຫມ່​, ຖ້າ​ຫາກ​ວ່າ​ທ່ານ​ບໍ່​ໄດ້​ສະ​ແດງ​ຮູບ​ພາບແມ່ນ​ສະ​ແດງ​ໃຫ້​ເຫັນ​ຮູບ​ແບບ​ອາວາຕ້າແທ່ນ​! ',
       textStyle: MyContant().h3StyleP(),
     );
   }
@@ -560,7 +560,7 @@ class _CreateAccountState extends State<CreateAccount> {
               });
             },
             title: ShowTitle(
-              title: '(Buyyer)',
+              title: 'ຜູ້ຊື້ (Buyyer)',
               textStyle: MyContant().h3StyleP(),
             ),
           ),
@@ -584,7 +584,7 @@ class _CreateAccountState extends State<CreateAccount> {
               });
             },
             title: ShowTitle(
-              title: '(Seller)',
+              title: 'ຜູ້ຂາຍ (Seller)',
               textStyle: MyContant().h3StyleP(),
             ),
           ),
@@ -608,7 +608,7 @@ class _CreateAccountState extends State<CreateAccount> {
               });
             },
             title: ShowTitle(
-              title: '(Rider)',
+              title: 'ຜູ້ສົ່ງ (Rider)',
               textStyle: MyContant().h3StyleP(),
             ),
           ),

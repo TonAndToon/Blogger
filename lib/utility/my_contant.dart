@@ -4,7 +4,7 @@ class MyContant {
   //General
   static String appName = 'LDB Blogger';
   static String version = ' 20250605.V1.0.1';
-  static String domain = 'https://7e3f-202-136-243-67.ngrok-free.app';
+  static String domain = 'https://eeb0-43-252-244-246.ngrok-free.app';
 
   //Route
   static String rounteAuthen = '/authen';
@@ -29,6 +29,7 @@ class MyContant {
   static Color darkColor = Color(0xff1146a0);
   static Color whColor = Color(0xffFFFFFF);
   static Color redColor = Colors.red;
+  static Color greyColor = Colors.grey.shade300;
 
   static Map<int, Color> mapMaterialColor = {
   50:Color.fromRGBO(30, 136, 229, 0.1),
@@ -46,19 +47,19 @@ class MyContant {
   //Text style
   //Primary color
   TextStyle h1StyleP() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 24,
         fontWeight: FontWeight.bold,
         color: MyContant.primaryColor,
       );
   TextStyle h2StyleP() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 18,
         fontWeight: FontWeight.w700,
         color: MyContant.primaryColor,
       );
   TextStyle h3StyleP() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 14,
         fontWeight: FontWeight.normal,
         color: MyContant.primaryColor,
@@ -66,19 +67,19 @@ class MyContant {
 
   //Light color
   TextStyle h1StyleL() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 24,
         fontWeight: FontWeight.bold,
         color: MyContant.lightColor,
       );
   TextStyle h2StyleL() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 18,
         fontWeight: FontWeight.w700,
         color: MyContant.lightColor,
       );
   TextStyle h3StyleL() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 14,
         fontWeight: FontWeight.normal,
         color: MyContant.lightColor,
@@ -86,19 +87,19 @@ class MyContant {
 
   //Dark color
   TextStyle h1StyleD() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 24,
         fontWeight: FontWeight.bold,
         color: MyContant.darkColor,
       );
   TextStyle h2StyleD() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 18,
         fontWeight: FontWeight.w700,
         color: MyContant.darkColor,
       );
   TextStyle h3StyleD() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 14,
         fontWeight: FontWeight.normal,
         color: MyContant.darkColor,
@@ -106,19 +107,19 @@ class MyContant {
 
   //Write color
   TextStyle h1StyleWh() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 24,
         fontWeight: FontWeight.bold,
         color: MyContant.whColor,
       );
   TextStyle h2StyleWh() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 18,
         fontWeight: FontWeight.w700,
         color: MyContant.whColor,
       );
   TextStyle h3StyleWh() => TextStyle(
-        fontFamily: 'NotoSanLaos',
+        fontFamily: 'NotoSansLao',
         fontSize: 14,
         fontWeight: FontWeight.normal,
         color: MyContant.whColor,

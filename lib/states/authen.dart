@@ -79,7 +79,7 @@ class _AuthenState extends State<Authen> {
       children: [
         Container(
           child: ShowTitle(
-            title: ' Do you have account',
+            title: ' ທ່ານມີບັນຊີຜູ້ໃຊ້ງານຫຼືຍັງ?',
             textStyle: MyContant().h3StyleD(),
           ),
         ),
@@ -87,7 +87,7 @@ class _AuthenState extends State<Authen> {
           onPressed: () =>
               Navigator.pushNamed(context, MyContant.rounteCreateAccount),
           child: Text(
-            'Create account',
+            'ລົງທະບຽນເລີຍ',
             style: MyContant().h3StyleL(),
           ),
         ),
@@ -114,7 +114,7 @@ class _AuthenState extends State<Authen> {
               }
             },
             child: Text(
-              'Login',
+              'ເຂົ້າລະບົບ',
               style: MyContant().h2StyleWh(),
             ),
           ),
@@ -200,7 +200,7 @@ class _AuthenState extends State<Authen> {
               }
             },
             decoration: InputDecoration(
-              labelText: 'User:',
+              labelText: 'ຜູ້ໃຊ້:',
               labelStyle: MyContant().h3StyleP(),
               prefixIcon: Icon(
                 Icons.account_circle,
@@ -261,7 +261,7 @@ class _AuthenState extends State<Authen> {
                         color: MyContant.primaryColor,
                       ),
               ),
-              labelText: 'Password:',
+              labelText: 'ລະຫັດຜ່ານ:',
               labelStyle: MyContant().h3StyleP(),
               prefixIcon: Icon(
                 Icons.key,

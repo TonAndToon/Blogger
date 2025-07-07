@@ -15,7 +15,7 @@ class _BuyerServiceState extends State<BuyerService> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(foregroundColor: MyContant.whColor,
-        title: Text('ຜູ້ຊື້'),
+        title: Text('ຜູ້ຊື້',style: TextStyle(fontFamily: 'NotoSansLao'),),
       ),
       drawer: Drawer(
         child: ShowSignOut(),

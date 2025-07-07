@@ -28,11 +28,11 @@ class ShowSignOut extends StatelessWidget {
             size: 36,
           ),
           title: ShowTitle(
-            title: 'Sign Out',
+            title: 'ອອກຈາກລະບົບ',
             textStyle: MyContant().h2StyleD(),
           ),
           subtitle: ShowTitle(
-            title: 'Sign Out and go to Authen',
+            title: 'ອອກຈາກລະບົບ ແລະ ໄປໜ້າເຂົ້າສູ່ລະບົບ',
             textStyle: MyContant().h3StyleD(),
           ),
         ),

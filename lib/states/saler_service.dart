@@ -5,6 +5,7 @@ import 'package:blogger/bodys/show_order_seller.dart';
 import 'package:blogger/bodys/show_product_seller.dart';
 import 'package:blogger/models/user_model.dart';
 import 'package:blogger/utility/my_contant.dart';
+import 'package:blogger/widgets/show_progess.dart';
 import 'package:blogger/widgets/show_signout.dart';
 import 'package:blogger/widgets/show_title.dart';
 import 'package:dio/dio.dart';
@@ -20,11 +21,7 @@ class SalerService extends StatefulWidget {
 }
 
 class _SalerServiceState extends State<SalerService> {
-  List<Widget> widgets = [
-    ShowOrderSeller(),
-    ShowManageSeller(),
-    ShowProductSeller(),
-  ];
+  List<Widget> widgets = [];
   int indexWitget = 0;
 
   UserModel? userModel;
@@ -42,17 +39,19 @@ class _SalerServiceState extends State<SalerService> {
     print('id Logined ==>> $id');
     String apiGetUserWhereId =
         '${MyContant.domain}/bloggerr/getUserWhereId.php?isAdd=true&id=$id';
-    await Dio().get(apiGetUserWhereId).then(
-      (value) {
-        print('#### value ==>> $value');
-        for (var item in json.decode(value.data)) {
-          setState(() {
-            userModel = UserModel.fromMap(item);
-            print('#### name logined = ${userModel!.name}');
-          });
-        }
-      },
-    );
+    await Dio().get(apiGetUserWhereId).then((value) {
+      print('#### value ==>> $value');
+      for (var item in json.decode(value.data)) {
+        setState(() {
+          userModel = UserModel.fromMap(item);
+          print('#### name logined = ${userModel!.name}');
+
+          widgets.add(ShowOrderSeller(userModel: userModel!));
+          widgets.add(ShowManageSeller(userModel: userModel!));
+          widgets.add(ShowProductSeller(userModel: userModel!));
+        });
+      }
+    });
   }
 
   @override
@@ -60,9 +59,10 @@ class _SalerServiceState extends State<SalerService> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: MyContant.whColor,
-        title: Text('ຜູ້ຂາຍ'),
+        title: Text('ຜູ້ຂາຍ',style: TextStyle(fontFamily: 'NotoSansLao')),
       ),
       drawer: Drawer(
+        width: 326,
         child: Stack(
           children: [
             ShowSignOut(),
@@ -77,7 +77,10 @@ class _SalerServiceState extends State<SalerService> {
           ],
         ),
       ),
-      body: widgets[indexWitget],
+      body: widgets.length == 0 ? ShowProgess() : widgets[indexWitget],
+      //   body: widgets.isNotEmpty && indexWitget < widgets.length
+      // ? widgets[indexWitget]
+      // : Center(child: Text('No widget to display')),
     );
   }
 
@@ -87,14 +90,15 @@ class _SalerServiceState extends State<SalerService> {
         backgroundImage:
             NetworkImage('${MyContant.domain}${userModel?.avatar}'),
       ),
-      accountName: Text(userModel == null ? 'Name ?' : userModel!.name),
-      accountEmail: Text(userModel == null ? 'Type ?' : userModel!.type),
+      accountName: Text(userModel == null ? 'Name ?' : userModel!.name,style: MyContant().h2StyleWh(),),
+      accountEmail: Text(userModel == null ? 'Type ?' : userModel!.type,style: MyContant().h3StyleWh(),),
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: [
-            MyContant.lightColor,
-            MyContant.darkColor,
-          ],center: Alignment(-0.7, -0.2)
+            MyContant.greyColor,
+            MyContant.primaryColor,
+          ],
+          center: Alignment(1.9, -0.7),
         ),
       ),
     );
@@ -110,11 +114,11 @@ class _SalerServiceState extends State<SalerService> {
       },
       leading: Icon(Icons.filter_1_outlined),
       title: ShowTitle(
-        title: 'Show Order',
+        title: 'ການສັ່ງຊື້',
         textStyle: MyContant().h2StyleD(),
       ),
       subtitle: ShowTitle(
-        title: 'Show detail order',
+        title: 'ລາຍລະອຽດການສັ່ງຊື້',
         textStyle: MyContant().h3StyleD(),
       ),
     );
@@ -130,11 +134,11 @@ class _SalerServiceState extends State<SalerService> {
       },
       leading: Icon(Icons.filter_2_outlined),
       title: ShowTitle(
-        title: 'Show Manage',
+        title: 'ຈັດການໜ້າຮ້ານ',
         textStyle: MyContant().h2StyleD(),
       ),
       subtitle: ShowTitle(
-        title: 'Show detail shop',
+        title: 'ລາຍລະອຽດຈັດການໜ້າຮ້ານ',
         textStyle: MyContant().h3StyleD(),
       ),
     );
@@ -150,11 +154,11 @@ class _SalerServiceState extends State<SalerService> {
       },
       leading: Icon(Icons.filter_3_outlined),
       title: ShowTitle(
-        title: 'Show Product',
+        title: 'ຈັດການສີນຄ້າ',
         textStyle: MyContant().h2StyleD(),
       ),
       subtitle: ShowTitle(
-        title: 'Show detail product',
+        title: 'ລາຍລະອຽດການຈັດການສີນຄ້າ',
         textStyle: MyContant().h3StyleD(),
       ),
     );

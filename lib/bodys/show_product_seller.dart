@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:blogger/models/product_model.dart';
+import 'package:blogger/models/user_model.dart';
 import 'package:blogger/states/edit_product.dart';
 //import 'package:blogger/states/add_product.dart';
 import 'package:blogger/utility/my_contant.dart';
@@ -13,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowProductSeller extends StatefulWidget {
-  const ShowProductSeller({super.key});
+  const ShowProductSeller({super.key, required UserModel userModel});
 
   @override
   State<ShowProductSeller> createState() => _ShowProductSellerState();
@@ -97,7 +98,7 @@ class _ShowProductSellerState extends State<ShowProductSeller> {
         ).then(
           (value) => loadValueFromAPI(),
         ),
-        child: Text('Add'),
+        child: Text('ເພີ່ມ',style: MyContant().h2StyleWh(),),
       ),
     );
   }
