@@ -50,7 +50,7 @@ class _AddProductState extends State<AddProduct> {
           ),
         ],
         foregroundColor: MyContant.whColor,
-        title: Text('Add product'),
+        title: Text('ເພີ່ມສີນຄ້າ'),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) => GestureDetector(
@@ -94,7 +94,7 @@ class _AddProductState extends State<AddProduct> {
                 processAddProduct();
               },
               child: Text(
-                'Add product',
+                'ເພີ່ມສີນຄ້າ',
                 style: MyContant().h2StyleWh(),
               ),
             ),
@@ -185,11 +185,11 @@ class _AddProductState extends State<AddProduct> {
         title: ListTile(
           leading: ShowImage(path: MyContant.img1),
           title: ShowTitle(
-            title: 'Source Image ${index + 1} ?',
+            title: 'ເລືອກຮູບທີ ${index + 1} ?',
             textStyle: MyContant().h2StyleP(),
           ),
           subtitle: ShowTitle(
-            title: 'Please Tab on Camara or Gallery',
+            title: 'ກະລຸນາເລືອກຮູບຈາກກ້ອງຖ່າຍ ແລະ ຟາຍເກັບຮູບ',
             textStyle: MyContant().h3StyleP(),
           ),
         ),
@@ -202,14 +202,14 @@ class _AddProductState extends State<AddProduct> {
                   Navigator.pop(context);
                   processImagePicker(ImageSource.camera, index);
                 },
-                child: Text('Camara'),
+                child: Text('ກ້ອງຖ່າຍ'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                   processImagePicker(ImageSource.gallery, index);
                 },
-                child: Text('Gallery'),
+                child: Text('ຟາຍເກັບຮູບ'),
               ),
             ],
           ),
@@ -300,13 +300,13 @@ class _AddProductState extends State<AddProduct> {
         controller: nameController,
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please Fill name Blank';
+            return 'ກະລຸນາປ້ອນຊື່ສີນຄ້າ';
           } else {
             return null;
           }
         },
         decoration: InputDecoration(
-          labelText: 'Name product:',
+          labelText: 'ຊື່ສີນຄ້າ:',
           labelStyle: MyContant().h3StyleP(),
           prefixIcon: Icon(
             Icons.production_quantity_limits_sharp,
@@ -346,14 +346,14 @@ class _AddProductState extends State<AddProduct> {
         controller: priceController,
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please Fill price Blank';
+            return 'ກະລຸນາປ້ອນລາຄາສີນຄ້າ';
           } else {
             return null;
           }
         },
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          labelText: 'Price product:',
+          labelText: 'ລາຄາສີນຄ້າ:',
           labelStyle: MyContant().h3StyleP(),
           prefixIcon: Icon(
             Icons.price_change_outlined,
@@ -393,14 +393,14 @@ class _AddProductState extends State<AddProduct> {
         controller: detailController,
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please Fill product Blank';
+            return 'ກະລຸນາປ້ອນລາຍລະອຽດສີນຄ້າ';
           } else {
             return null;
           }
         },
         maxLines: 4,
         decoration: InputDecoration(
-          hintText: 'Detail product:',
+          hintText: 'ລາຍລະອຽດສີນຄ້າ:',
           hintStyle: MyContant().h3StyleP(),
           prefixIcon: Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 78),
