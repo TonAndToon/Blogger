@@ -27,6 +27,17 @@ class _ShowManageSellerState extends State<ShowManageSeller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.edit,
+          color: MyContant.whColor,
+        ),
+        backgroundColor: MyContant.primaryColor,
+        onPressed: () => Navigator.pushNamed(
+          context,
+          MyContant.rounteEditProfileSeller,
+        ),
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) => Padding(
           padding: const EdgeInsets.all(8.0),

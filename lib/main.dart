@@ -2,6 +2,7 @@ import 'package:blogger/states/add_product.dart';
 import 'package:blogger/states/authen.dart';
 import 'package:blogger/states/buyer_service.dart';
 import 'package:blogger/states/create_account.dart';
+import 'package:blogger/states/edit_profile_seller.dart';
 import 'package:blogger/states/rider_service.dart';
 import 'package:blogger/states/saler_service.dart';
 import 'package:blogger/utility/my_contant.dart';
@@ -15,6 +16,7 @@ final Map<String, WidgetBuilder> map = {
   '/salerService': (BuildContext context) => SalerService(),
   '/riderService': (BuildContext context) => RiderService(),
   '/addProduct': (BuildContext context) => AddProduct(),
+  '/editProfileSeller': (BuildContext context) => EditProfileSeller(),
 };
 
 String? initalRounte;

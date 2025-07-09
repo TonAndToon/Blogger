@@ -4,7 +4,7 @@ class MyContant {
   //General
   static String appName = 'LDB Blogger';
   static String version = ' 20250605.V1.0.1';
-  static String domain = 'https://4ebaa64158b4.ngrok-free.app';
+  static String domain = 'https://af7778492b00.ngrok-free.app';
 
   //Route
   static String rounteAuthen = '/authen';
@@ -13,6 +13,7 @@ class MyContant {
   static String rounteSalerService = '/salerService';
   static String rounteRiderService = '/riderService';
   static String rounteAddProduct = '/addProduct';
+  static String rounteEditProfileSeller = '/editProfileSeller';
 
   //Images
   static String img1 = 'assets/images/ATM1.webp';
