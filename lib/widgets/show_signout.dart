@@ -37,6 +37,6 @@ class ShowSignOut extends StatelessWidget {
           ),
         ),
       ],
-    );;
+    );
   }
 }

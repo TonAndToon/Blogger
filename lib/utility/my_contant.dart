@@ -4,7 +4,7 @@ class MyContant {
   //General
   static String appName = 'LDB Blogger';
   static String version = ' 20250605.V1.0.1';
-  static String domain = 'https://af7778492b00.ngrok-free.app';
+  static String domain = 'https://17c6b0bd9692.ngrok-free.app';
 
   //Route
   static String rounteAuthen = '/authen';
